@@ -5,6 +5,7 @@ from helpers import prepare_dataset_nli, prepare_train_dataset_qa, \
     prepare_validation_dataset_qa, QuestionAnsweringTrainer, compute_accuracy
 import os
 import json
+from datasets import concatenate_datasets
 
 NUM_PREPROCESSING_WORKERS = 2
 
@@ -61,7 +62,7 @@ def main():
         # By default, the "json" dataset loader places all examples in the train split,
         # so if we want to use a jsonl file for evaluation we need to get the "train" split
         # from the loaded dataset
-        eval_split = 'train'
+        # eval_split = 'train'
     else:
         default_datasets = {'qa': ('squad',), 'nli': ('snli',)}
         dataset_id = tuple(args.dataset.split(':')) if args.dataset is not None else \
@@ -102,8 +103,18 @@ def main():
     eval_dataset = None
     train_dataset_featurized = None
     eval_dataset_featurized = None
+
+    # squad_adv_addSent = datasets.load_dataset('squad_adversarial', 'AddSent')
+    # contrast_st= datasets.load_dataset('json', data_files='./datasets/train-v1.1.json')
+    #
+    # # Filter dataset to include only examples with 'high-conf' in ID
+    # squad_adv_addSent = squad_adv_addSent.filter(
+    #     lambda example: "high-conf" in json.dumps(example["id"])
+    # )
+
     if training_args.do_train:
         train_dataset = dataset['train']
+        # train_dataset = concatenate_datasets([train_dataset, contrast_st['train']])
         if args.max_train_samples:
             train_dataset = train_dataset.select(range(args.max_train_samples))
         train_dataset_featurized = train_dataset.map(

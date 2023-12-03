@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "id": "345678",
+      "title": "Normans",
+      "context": "The Normans (Norman: Nourmands; French: Normands; Latin: Normanni) were the people who were alive in the 10th and 11th centuries and then named the region in wich they lived Normandy, which is a region in France. These people were descended from Norse (\"Norman\" comes from \"Norseman\") raiders, pirates and pillagers from Denmark, Iceland and Norway who, under their leader Rollo, agreed to swear fealty to King Charles III of West Francia. Through generations of assimilation and mating with the native Frankish and Roman-Gaulish populations, their offspring would eventually merge with the Carolingian-based cultures of West Francia. The unique cultural and ethnic identity of the Normans came about initially in the first half of the 10th century but no later than 950, and it continued to grow and morph over the succeeding centuries.",
+      "question": "In what country is Normandy located?",
+      "answers": {
+        "text": [
+          "France",
+          "France",
+          "France",
+          "France"
+        ],
+        "answer_start": [
+          205,
+          205,
+          205,
+          205
+        ]
+      }
+    }
+  ]
+}
