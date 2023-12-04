@@ -49,6 +49,9 @@ def main():
                       help='Limit the number of examples to evaluate on.')
 
     training_args, args = argp.parse_args_into_dataclasses()
+    # training_args.num_train_epochs = 10.0
+    # training_args.weight_decay = 0.01
+    # training_args.learning_rate = 0.01
 
     # Dataset selection
     # IMPORTANT: this code path allows you to load custom datasets different from the standard SQuAD or SNLI ones.
@@ -62,7 +65,7 @@ def main():
         # By default, the "json" dataset loader places all examples in the train split,
         # so if we want to use a jsonl file for evaluation we need to get the "train" split
         # from the loaded dataset
-        # eval_split = 'train'
+        eval_split = 'train'
     else:
         default_datasets = {'qa': ('squad',), 'nli': ('snli',)}
         dataset_id = tuple(args.dataset.split(':')) if args.dataset is not None else \
@@ -105,6 +108,9 @@ def main():
     eval_dataset_featurized = None
 
     # squad_adv_addSent = datasets.load_dataset('squad_adversarial', 'AddSent')
+    # squad_adv_addOneSent = datasets.load_dataset('squad_adversarial', 'AddOneSent')
+    # squad_shifts = datasets.load_dataset('squadshifts', 'new_wiki')
+    # multifactor = datasets.load_dataset('zeaver/multifactor_squad1.1_zhou')
     # contrast_st= datasets.load_dataset('json', data_files='./datasets/train-v1.1.json')
     #
     # # Filter dataset to include only examples with 'high-conf' in ID
@@ -114,7 +120,9 @@ def main():
 
     if training_args.do_train:
         train_dataset = dataset['train']
-        # train_dataset = concatenate_datasets([train_dataset, contrast_st['train']])
+        # train_dataset = concatenate_datasets([train_dataset, squad_adv_addSent['validation'],
+        #                                       squad_adv_addOneSent['validation'],squad_shifts['test'],
+        #                                       multifactor['test']])
         if args.max_train_samples:
             train_dataset = train_dataset.select(range(args.max_train_samples))
         train_dataset_featurized = train_dataset.map(
